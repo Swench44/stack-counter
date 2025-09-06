@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minecraft Stack Calculator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #2c3e50;
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            background: #34495e;
+            border: 1px solid #4CAF50;
+            border-radius: 8px;
+            padding: 30px;
+            text-align: center;
+            max-width: 350px;
+            width: 90%;
+        }
+
+        h1 {
+            color: #4CAF50;
+            margin-bottom: 25px;
+            font-size: 24px;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #4CAF50;
+            border-radius: 4px;
+            background: #2c3e50;
+            color: white;
+            font-size: 16px;
+            text-align: center;
+        }
+
+        input[type="number"]:focus {
+            outline: none;
+            border-color: #4CAF50;
+        }
+
+        input[type="number"]::-webkit-outer-spin-button,
+        input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        input[type="number"] {
+            -moz-appearance: textfield;
+        }
+
+        .result {
+            background: #2c3e50;
+            border: 1px solid #4CAF50;
+            border-radius: 4px;
+            padding: 15px;
+            margin-top: 20px;
+            font-size: 18px;
+            color: #4CAF50;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Calculate</h1>
+        
+        <input type="number" id="itemCount" placeholder="400" min="0">
+        
+        <div class="result" id="result">Enter a number</div>
+    </div>
+
+    <script>
+        const itemInput = document.getElementById('itemCount');
+        const resultDiv = document.getElementById('result');
+
+        function calculateStacks(itemCount) {
+            if (itemCount === 0 || itemCount === '') {
+                return 'Enter a number';
+            }
+            
+            const stacks = Math.floor(itemCount / 64);
+            const remainder = itemCount % 64;
+            
+            if (stacks === 0) {
+                return `${remainder}`;
+            } else if (remainder === 0) {
+                return `${stacks} stack`;
+            } else {
+                return `${stacks} stack + ${remainder}`;
+            }
+        }
+
+        function updateResult() {
+            const itemCount = parseInt(itemInput.value) || 0;
+            const result = calculateStacks(itemCount);
+            resultDiv.textContent = result;
+        }
+
+        itemInput.addEventListener('input', updateResult);
+        itemInput.focus();
+    </script>
+</body>
+</html>
